@@ -24,32 +24,37 @@ scissorsBtn.addEventListener('click', () => startGame('scissors'));
 // Check who wins and prints score //
 
 function playRound(player, computer){
+    message.textContent = '';
     if(
         player == "rock" && computer == "scissors" ||
         player == "paper" && computer == "rock" ||
         player == "scissors" && computer == "paper"
     ){
         playerScore++;
+        div.textContent = 'Player Wins';
+
     }else if(
         player == "rock" && computer == "paper" ||
         player == "paper" && computer == "scissors" ||
         player == "scissors" && computer == "rock"
     ){
         computerScore++;
+        div.textContent = 'Computer Wins';
     }else{
-        console.log("It's a tie!");
+        div.textContent = "It's a tie!";
     }
-    console.log("Result:");
-    console.log(playerScore);
-    console.log(computerScore);
+    playerScoreMsg.textContent = "Player: " + playerScore;
+    computerScoreMsg.textContent = "Computer: " + computerScore;
 }
 
 // Check is game over? If it's over call reset() //
 
 function isGameOver(){
     if(computerScore == 5 || playerScore == 5){
-        console.log("Game Over!!!")
+        div.textContent = "Game Over!";
+
         reset();
+
     }
 }
 
@@ -57,12 +62,15 @@ function isGameOver(){
 
 function reset(){
     if(computerScore == 5){
-        console.log("Computer Wins!");
+        message.textContent = "Computer Wins!";
+        
     }else{
-        console.log("Player Wins!");
+        message.textContent = "Player Wins!";
     }
+
     computerScore = 0;
     playerScore = 0;
+
 }
 
 // Starting game //
@@ -70,3 +78,24 @@ function startGame(playerSelection){
     playRound(playerSelection, computerSelect(optionsArray));
     isGameOver();
 }
+
+
+// UI 
+const container = document.querySelector('#container');
+
+const div = document.createElement('div');
+div.classList.add('div');
+container.append(div);
+
+
+const playerScoreMsg = document.createElement('p');
+playerScoreMsg.classList.add('player-score-message');
+container.append(playerScoreMsg); 
+
+const computerScoreMsg = document.createElement('p');
+computerScoreMsg.classList.add('computer-score-message');
+container.append(computerScoreMsg);
+
+const message = document.createElement('p');
+message.classList.add('message');
+container.append(message);
